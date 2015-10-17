@@ -1,18 +1,15 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $ionicPopup) {
-  $scope.offer = {
-    'itemName':'Mint Scratch \'n Sniff Skinny Jeans',
-    'originalPrice':'79.99',
-    'discountPrice':'69.99',
-    'image':'https://cdn.shopify.com/s/files/1/0322/0537/products/top_folded_4d796733-b981-40b3-afad-874ea7f39b27_1024x1024.jpg?v=1391279958',
-    'dealEnds':'10/20/15',
-    'stars':'4.5',
-    'barcode':'img\\barcode.png',
-    'type':'pants',
-    'subtype':'jeans',
-    'store':'Tate + Yoko'
-  };
+.controller('DashCtrl', function($scope, $ionicPopup, Offers) {
+
+  var foobar = window.localStorage.getItem('offer');
+  if (foobar === null) {
+    $scope.offer = Offers.byClass('t-shirts');
+  }
+  else{
+    $scope.offer = Offers.byClass(window.localStorage.getItem('offer'));
+  }
+
 
   $scope.showAlert = function(barc0de) {
    var alertPopup = $ionicPopup.alert({
@@ -77,6 +74,9 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AccountCtrl', function($scope) {
+  var user = Ionic.User.current();
+  $scope.fullName = user.get('firstName') + " " + user.get('lastName');
+  // $scope.fullName = "Bij Baj";
   $scope.settings = {
     enableFriends: true
   };

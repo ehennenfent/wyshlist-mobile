@@ -76,14 +76,9 @@ angular.module('starter.services', [])
     thumb: 'https://cdn1.iconfinder.com/data/icons/DarkGlass_Reworked/128x128/apps/assistant.png'
   }, {
     id: 14,
-    name: 'Ankle Socks',
+    name: 'Socks',
     selected: false,
     thumb: 'http://thumbnail.image.rakuten.co.jp/@0_mall/aspo/cabinet/ssk010/15fw/oss-ajp-m9868-e05507.jpg?_ex=128x128'
-  }, {
-    id: 15,
-    name: 'No-Show Socks',
-    selected: false,
-    thumb: 'http://var.pumart.net/nikegolf-mens-dri-fit-performance-no-show-sock-9-11_small.jpg'
   }];
 
   // var processList = function(){
@@ -121,6 +116,201 @@ angular.module('starter.services', [])
         }
       }
       return null;
+    },
+  };
+})
+.factory('Offers', function(){
+  var offers = [
+    {
+      'itemName':'Limited Edition Boilermaker Shirt',
+      'originalPrice':'70.00',
+      'discountPrice':'42.00',
+      'image':'https://news.uns.purdue.edu/images/2015/boiler-special.jpg',
+      'dealEnds':'10/23/15',
+      'stars':'5',
+      'barcode':'img\\barcode.png',
+      'class':'t-shirts',
+      'store':'Custom Ink',
+      'id':0
+    },
+    {
+      'itemName':'Blue Blouse',
+      'originalPrice':'49.99',
+      'discountPrice':'29.99',
+      'image':'http://www.nmwilliams.co.uk/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/l/bl_903_2_blue_fly_front_ls_blouse_1_1.jpg',
+      'dealEnds':'10/19/15',
+      'stars':'3.5',
+      'barcode':'img\\barcode.png',
+      'class':'blouses',
+      'store':'Macy\'s',
+      'id':1
+    },
+    {
+      'itemName':'Raptor Polo',
+      'originalPrice':'69.99',
+      'discountPrice':'59.99',
+      'image':'http://cdn.shopify.com/s/files/1/0149/3544/products/raptor_polo_5_1024x1024.jpg?v=1417629395',
+      'dealEnds':'10/21/15',
+      'stars':'3',
+      'barcode':'img\\barcode.png',
+      'class':'polo shirts',
+      'store':'xkcd',
+      'id':2
+    },
+    {
+      'itemName':'Golden Dress shirt',
+      'originalPrice':'999.99',
+      'discountPrice':'974.99',
+      'image':'http://ep.yimg.com/ay/yhst-75122687164419/mens-elegant-shiny-gold-satin-formal-dress-shirt-tie-hanky-daniel-ellissa-brand-5.gif',
+      'dealEnds':'10/22/15',
+      'stars':'2',
+      'barcode':'img\\barcode.png',
+      'class':'dress shirts',
+      'store':'Nader Fashion',
+      'id':3
+    },
+    {
+      'itemName':'Dr. Who Sundress',
+      'originalPrice':'59.99',
+      'discountPrice':'39.99',
+      'image':'https://s-media-cache-ak0.pinimg.com/originals/22/d4/0b/22d40b488b16062e5501f20e64092b8f.jpg',
+      'dealEnds':'10/22/15',
+      'stars':'4.5',
+      'barcode':'img\\barcode.png',
+      'class':'sundresses',
+      'store':'Etsy',
+      'id':4
+    },
+    {
+      'itemName':'Black Evening Gown',
+      'originalPrice':'119.99',
+      'discountPrice':'99.99',
+      'image':'http://static.merpherl.com/media/catalog/product/cache/1/image/01e0bdf8ea7e3dd64bfbc5ab0fbb943c/A/T/AT0638_1.jpg',
+      'dealEnds':'10/22/15',
+      'stars':'4',
+      'barcode':'img\\barcode.png',
+      'class':'evening dresses',
+      'store':'Lily Pulitzer',
+      'id':5
+    },
+    {
+      'itemName':'Mint Scratch \'n Sniff Skinny Jeans',
+      'originalPrice':'79.99',
+      'discountPrice':'69.99',
+      'image':'https://cdn.shopify.com/s/files/1/0322/0537/products/top_folded_4d796733-b981-40b3-afad-874ea7f39b27_1024x1024.jpg?v=1391279958',
+      'dealEnds':'10/20/15',
+      'stars':'4.5',
+      'barcode':'img\\barcode.png',
+      'class':'jeans',
+      'store':'Tate + Yoko',
+      'id':6
+    },
+    {
+      'itemName':'Slacks',
+      'originalPrice':'99.99',
+      'discountPrice':'69.99',
+      'image':'http://8ninths.com/wp-content/uploads/2015/05/Slack-Colour-RGB.png',
+      'dealEnds':'10/20/15',
+      'stars':'4.5',
+      'barcode':'img\\barcode.png',
+      'class':'slacks',
+      'store':'The Internet',
+      'id':7
+    },
+    {
+      'itemName':'Classic Converse',
+      'originalPrice':'89.99',
+      'discountPrice':'29.99',
+      'image':'http://images6.fanpop.com/image/photos/33700000/converse-converse-33758775-1500-1234.jpg',
+      'dealEnds':'10/23/15',
+      'stars':'4',
+      'barcode':'img\\barcode.png',
+      'class':'shoes',
+      'store':'American Apparel',
+      'id':8
+    },
+    {
+      'itemName':'Moon Shoes',
+      'originalPrice':'199.99',
+      'discountPrice':'69.99',
+      'image':'http://ecx.images-amazon.com/images/I/81xe2issPZL._SL1500_.jpg',
+      'dealEnds':'10/21/15',
+      'stars':'1.5',
+      'barcode':'img\\barcode.png',
+      'class':'running shoes',
+      'store':'Amazon',
+      'id':9
+    },
+    {
+      'itemName':'Spiked Heels',
+      'originalPrice':'99.99',
+      'discountPrice':'79.99',
+      'image':'https://img0.etsystatic.com/000/0/6216654/il_fullxfull.274186712.jpg',
+      'dealEnds':'10/20/15',
+      'stars':'5',
+      'barcode':'img\\barcode.png',
+      'class':'heels',
+      'store':'Zappos Brick + Mortar',
+      'id':10
+    },
+    {
+      'itemName':'Steel-Toed Combat Boots',
+      'originalPrice':'109.99',
+      'discountPrice':'99.99',
+      'image':'http://image.sportsmansguide.com/adimgs/l/9/96825m2_ts.jpg',
+      'dealEnds':'10/20/15',
+      'stars':'4',
+      'barcode':'img\\barcode.png',
+      'class':'work shoes',
+      'store':'\'Murica Surplus',
+      'id':11
+    },
+    {
+      'itemName':'Business Suit',
+      'originalPrice':'99.99',
+      'discountPrice':'98.99',
+      'image':'http://www.pinstripeandpearls.com/wp-content/uploads/Catherine-Navy-Blue-Skirt-Suit-by-Nooshin-Main.jpg',
+      'dealEnds':'10/19/15',
+      'stars':'4.5',
+      'barcode':'img\\barcode.png',
+      'class':'women\'s suits',
+      'store':'Meyers & Briggs',
+      'id':12
+    },
+    {
+      'itemName':'Galaxy Print Blazer',
+      'originalPrice':'69.99',
+      'discountPrice':'42.42',
+      'image':'https://img1.etsystatic.com/000/0/5542530/il_fullxfull.350328281.jpg',
+      'dealEnds':'04/20/69',
+      'stars':'5',
+      'barcode':'img\\barcode.png',
+      'class':'men\'s suits',
+      'store':'Good Will',
+      'id':13
+    },
+    {
+      'itemName':'Woolen Cabin Socks',
+      'originalPrice':'19.99',
+      'discountPrice':'9.99',
+      'image':'https://asset3.surfcdn.com/seasalt-socks-seasalt-cabin-socks-porthole-squid-ink.jpg?w=1200&h=1200&q=80&o=br6HF$ytlp7tH8uu$vPH647xrcgj&V=WPM6',
+      'dealEnds':'12/25/15',
+      'stars':'5',
+      'barcode':'img\\barcode.png',
+      'class':'socks',
+      'store':'SmartWool',
+      'id':14
+    },
+  ];
+
+  return {
+    all: function(){
+      return offers
+    },
+    byClass: function(clas){
+      for(var i = 0; i < offers.length; i++){
+        if(offers[i].class.replace(' ','').replace('\'','').toLowerCase() === clas.replace(' ','').replace('\'','').toLowerCase()){return offers[i];}
+      }
     },
   };
 });

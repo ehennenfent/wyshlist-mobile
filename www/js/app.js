@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,6 +20,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
+    Ionic.io();
+
+    var push = new Ionic.Push({
+     "debug": true
+   });
+
+    var user = Ionic.User.current();
+    if (!user.id) {
+      user.id = Ionic.User.anonymousId();
+      // user.id = 'your-custom-user-id';
+    }
+    user.set('firstName','Bij');
+    user.set('lastName','Baj');
+    var callback = function(data) {
+      console.log('Registered token:', data.token);
+      push.addTokenToUser(user);
+    }
+    push.register(callback);
+    user.save();
   });
 })
 
@@ -83,3 +103,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $urlRouterProvider.otherwise('/tab/dash');
 
 });
+
+var processNotification = function(stir){
+  return stir.replace('Check out new offers on ','').replace(' now!','');
+}
