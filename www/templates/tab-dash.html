@@ -1,4 +1,4 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="{{offer.store}}">
   <ion-content class="padding">
     <div class="list card" style="margin-top: 0px;">
       <div class="item item-divider">{{offer.itemName}}</div>
@@ -24,7 +24,7 @@
           <p style="width:50%; margin-left: auto; margin-right: auto; text-align:center">Deal Ends: {{offer.dealEnds}}</p>
         </div>
         <div>
-          <p style="width:80%; margin-left: auto; margin-right: auto; text-align:center"><button class="button button-balanced" style="width: 100%" ng-click="showAlert(offer.barcode)">Get Offer</button></p>
+          <p style="width:80%; margin-left: auto; margin-right: auto; text-align:center"><button class="button button-balanced" style="width: 100%; background-color: #50E3C2; border-color: #50E3C2;" ng-click="showAlert(offer.barcode)">Get Offer</button></p>
         </div>
       </div>
     </div>

@@ -1,13 +1,19 @@
 <ion-view view-title="Wishlist">
+  <ion-nav-buttons side="secondary">
+      <a  href="#/tab/edit"><button class="button">
+        <i class="icon ion-edit"></i>
+      </button></a>
+    </ion-nav-buttons>
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in wishlist" type="item-text-wrap" href="#/tab/wishlist/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+      <ion-item style="background-color: #F87AD6">
+        <h2 style="width: 100%; text-align: center; color:white;">You're interested in: </h2>
+      </ion-item>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="item in wishlist | filter:true" type="item-text-wrap">
+        <img ng-src="{{item.thumb}}">
+        <h2>{{item.name}}</h2>
+        <p>{{item.lastText}}</p>
+        <ion-option-button class="button-assertive" ng-click="remove(item)">
           Delete
         </ion-option-button>
       </ion-item>

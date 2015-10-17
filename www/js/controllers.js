@@ -10,7 +10,8 @@ angular.module('starter.controllers', [])
     'stars':'4.5',
     'barcode':'img\\barcode.png',
     'type':'pants',
-    'subtype':'jeans'
+    'subtype':'jeans',
+    'store':'Tate + Yoko'
   };
 
   $scope.showAlert = function(barc0de) {
@@ -32,11 +33,43 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
-  $scope.wishlist = Wishlist.all();
+  $scope.$on('$ionicView.enter', function(e) {
+        $scope.wishlist = Wishlist.all();
+    });
   $scope.remove = function(chat) {
     Wishlist.remove(chat);
   };
+})
+
+.controller('EditWishlistCtrl', function($scope, Wishlist) {
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+
+  $scope.toggle = function(item){
+    Wishlist.toggle(item.id);
+  };
+
+  $scope.toggleIcon = function($event, iconName, item) {
+    var buttonClasses = $event.currentTarget.className;
+    if (buttonClasses.indexOf(iconName + '-outline') > 0) {
+      buttonClasses = buttonClasses.replace('-outline', '-filled');
+    } else {
+      buttonClasses = buttonClasses.replace(iconName + '-filled', iconName + '-outline');
+    }
+    $event.currentTarget.className = buttonClasses;
+    $scope.toggle(item);
+  };
+
+  $scope.data = {
+    'selected':false
+  };
+
+  $scope.wishlist = Wishlist.all();
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Wishlist) {
