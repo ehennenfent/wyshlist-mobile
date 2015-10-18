@@ -30,15 +30,18 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
     var user = Ionic.User.current();
     if (!user.id) {
       user.id = Ionic.User.anonymousId();
-      // user.id = 'your-custom-user-id';
     }
     user.set('firstName','Bij');
     user.set('lastName','Baj');
     var callback = function(data) {
-      console.log('Registered token:', data.token);
+      console.log('Registered token: ' + data.token);
+      window.localStorage.setItem('token',data.token);
       push.addTokenToUser(user);
     }
     push.register(callback);
+    var foo = window.localStorage.getItem('token');
+    if(foo !== null){
+    user.set('token',foo);}
     user.save();
   });
 })
@@ -104,6 +107,11 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
 
 });
 
+window.onNotification = function(e) {
+      console.log(processNotification(e.message));
+          // this is the actual push notification. its format depends on the data model     from the push server
+          console.log('message = '+e.message);
+};
 var processNotification = function(stir){
   return stir.replace('Check out new offers on ','').replace(' now!','');
 }

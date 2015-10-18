@@ -3,7 +3,7 @@ angular.module('starter.services', [])
 .factory('Wishlist', function() {
   // Might use a resource here that returns a JSON array
 
-  // Some fake testing data
+  // Some fake testing data\
   var wishlist = [{
     id: 0,
     name: 'T-Shirts',
@@ -51,12 +51,12 @@ angular.module('starter.services', [])
     thumb: 'http://icons.iconarchive.com/icons/iconshock/80s/128/shoes-icon.png'
   }, {
     id: 9,
-    name: 'Heels',
+    name: 'Running Shoes',
     selected: false,
     thumb: 'http://cdn.outdoorgearlab.com/photos/12/80/249510_28340_S.jpg'
   }, {
     id: 10,
-    name: 'Running Shoes',
+    name: 'Heels',
     selected: false,
     thumb: 'http://litbimg5.rightinthebox.com/images/m/201403/rvvbaa1395163390805.jpg'
   }, {
@@ -81,18 +81,15 @@ angular.module('starter.services', [])
     thumb: 'http://thumbnail.image.rakuten.co.jp/@0_mall/aspo/cabinet/ssk010/15fw/oss-ajp-m9868-e05507.jpg?_ex=128x128'
   }];
 
-  // var processList = function(){
-  //
-  // };
-
   return {
     all: function() {
       var foobar = window.localStorage.getItem('selections');
       if (foobar === null) {
-        return wishlist
+        return wishlist;
       }
       var selections = JSON.parse(foobar);
-      for(var i = 0; i < selections.length; i++){
+      for (i = 0; i < wishlist.length; i+= 1){
+        // console.log(wishlist[i]);
         wishlist[i].selected = selections[i];
       }
       return wishlist;
@@ -101,7 +98,7 @@ angular.module('starter.services', [])
       wishlist.splice(wishlist.indexOf(chat), 1);
     },
     get: function(chatId) {
-      for (var i = 0; i < wishlist.length; i++) {
+      for (i = 0; i < wishlist.length; i+= 1) {
         if (wishlist[i].id === parseInt(chatId)) {
           return wishlist[i];
         }
@@ -109,14 +106,14 @@ angular.module('starter.services', [])
       return null;
     },
     toggle: function(chatId) {
-      for (var i = 0; i < wishlist.length; i++) {
+      for (i = 0; i < wishlist.length; i+= 1) {
         if (wishlist[i].id === parseInt(chatId)) {
           wishlist[i].selected = !wishlist[i].selected;
-          window.localStorage.setItem('selections',JSON.stringify(wishlist.map(function(item){return item.selected})));
+          window.localStorage.setItem('selections',JSON.stringify(wishlist.map(function(item){return item.selected;})));
         }
       }
       return null;
-    },
+    }
   };
 })
 .factory('Offers', function(){
@@ -307,6 +304,7 @@ angular.module('starter.services', [])
     all: function(){
       return offers
     },
+    get: function(k){return offers[k];},
     byClass: function(clas){
       for(var i = 0; i < offers.length; i++){
         if(offers[i].class.replace(' ','').replace('\'','').toLowerCase() === clas.replace(' ','').replace('\'','').toLowerCase()){return offers[i];}
