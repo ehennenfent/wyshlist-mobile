@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $ionicPopup, Offers, $rootScope) {
+.controller('DashCtrl', function($scope, $ionicPopup, Offers, $rootScope, $cordovaLocalNotification, Wishlist) {
 
   $scope.$on('$ionicView.enter', function(e) {
     var foobar = window.localStorage.getItem('offer');
@@ -22,6 +22,83 @@ angular.module('starter.controllers', [])
      ;
    });
  };
+
+ var delegate = new cordova.plugins.locationManager.Delegate();
+
+ delegate.didDetermineStateForRegion = function (pluginResult) {
+
+   $scope.debug.push('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+   console.log('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+
+   cordova.plugins.locationManager.appendToDeviceLog('[DOM] didDetermineStateForRegion: '
+       + JSON.stringify(pluginResult));
+ };
+
+ delegate.didStartMonitoringForRegion = function (pluginResult) {
+   $scope.debug.push('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+   console.log('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+ };
+
+ delegate.didRangeBeaconsInRegion = function (pluginResult) {
+   console.log("BEACONS: " + JSON.stringify(pluginResult.beacons));
+   if(pluginResult.beacons.length > 0){
+     var foo = window.localStorage.getItem('foundBeacon');
+     if(foo === null){
+       window.localStorage.setItem('foundBeacon',true);
+       foo = false;
+     }
+     if(foo === 'false'){
+       window.localStorage.setItem('foundBeacon', true);
+       console.log("DUDE SICK WE FOUND THE BEACON!!!!!!!!!!");
+       var alarmTime = new Date();
+       alarmTime.setSeconds(alarmTime.getSeconds() + 10);
+       $cordovaLocalNotification.add({
+            id: "4962",
+            date: alarmTime,
+            message: "Check out our new deals now!",
+            title: "Wyshlist",
+        }).then(function () {
+            console.log("The notification has been set");
+        });
+     }
+   }
+   else{
+     window.localStorage.setItem('foundBeacon',false);
+     console.log('WE LOST THE BEACON!!!!!!!!' + window.localStorage.getItem('foundBeacon'));
+   }
+   // $scope.debug.push('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+   // console.log('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+ };
+
+ var uuid = 'B0702880-A295-A8AB-F734-031A98A512DE';
+ var identifier = 'JPsMacbook';
+ var minor = 420;
+ var major = 69;
+ var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+
+ cordova.plugins.locationManager.setDelegate(delegate);
+
+ // required in iOS 8+
+ cordova.plugins.locationManager.requestWhenInUseAuthorization();
+ // or cordova.plugins.locationManager.requestAlwaysAuthorization()
+
+ // cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
+ cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+   .fail(function(){console.log("XXXXXXXXXXERROR!!!!!!!XXXXXXXXXX");})
+   .done(function(){console.log("XXXXXXXXXXSUCCESS!!!!!XXXXXXXXXX");});
+
+   $rootScope.$on('$cordovaLocalNotification:click',
+      function (event, notification, state) {
+        var foo = [];
+        for( i = 0; i < 15; i += 1){
+          if(Wishlist.get(i).selected){foo.push(Offers.get(i).class);}
+        }
+        var bar = Math.floor((Math.random() * foo.length));
+        window.localStorage.setItem('offer',foo[bar]);
+        window.location.href="#/dash";
+      });
+
+
 })
 
 .controller('WishlistCtrl', function($scope, Wishlist) {
@@ -85,59 +162,12 @@ angular.module('starter.controllers', [])
   $scope.chat = Wishlist.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, $rootScope) {
+.controller('AccountCtrl', function($scope, $rootScope, $cordovaLocalNotification) {
   var user = Ionic.User.current();
   $scope.fullName = user.get('firstName') + " " + user.get('lastName');
   $scope.token = user.get('token');
   $scope.debug = [];
 
-  var delegate = new cordova.plugins.locationManager.Delegate();
 
-  delegate.didDetermineStateForRegion = function (pluginResult) {
-
-    $scope.debug.push('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
-    console.log('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
-
-    cordova.plugins.locationManager.appendToDeviceLog('[DOM] didDetermineStateForRegion: '
-        + JSON.stringify(pluginResult));
-};
-
-delegate.didStartMonitoringForRegion = function (pluginResult) {
-    $scope.debug.push('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
-    console.log('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
-};
-
-delegate.didRangeBeaconsInRegion = function (pluginResult) {
-    console.log("BEACONS: " + JSON.stringify(pluginResult.beacons));
-    if(pluginResult.beacons.length > 0){
-      var foo = window.localStorage.getItem('foundBeacon');
-      if(foo === null){window.localStorage.setItem('foundBeacon',true);foo = true; return;}
-      if(!foo){window.localStorage.setItem('foundBeacon', false);}
-      console.log("Dude Sick we found the beacon!");
-
-    }
-    else{
-      
-    }
-    // $scope.debug.push('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-    // console.log('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-};
-
-var uuid = 'B0702880-A295-A8AB-F734-031A98A512DE';
-var identifier = 'JPsMacbook';
-var minor = 420;
-var major = 69;
-var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
-
-cordova.plugins.locationManager.setDelegate(delegate);
-
-// required in iOS 8+
-cordova.plugins.locationManager.requestWhenInUseAuthorization();
-// or cordova.plugins.locationManager.requestAlwaysAuthorization()
-
-// cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
-cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
-    .fail(function(){console.log("XXXXXXXXXXERROR!!!!!!!XXXXXXXXXX");})
-    .done(function(){console.log("XXXXXXXXXXSUCCESS!!!!!XXXXXXXXXX");});
 
 });
