@@ -1,0 +1,15 @@
+<ion-view view-title="Edit Wishlist">
+  <ion-content>
+    <ion-list>
+      <ion-item style="background-color: #F87AD6">
+        <h2 style="width: 100%; text-align: center; color:white;">What are you interested in?</h2>
+      </ion-item>
+      <ion-item class="item-avatar item-icon-right item-button-right" ng-repeat="item in wishlist" type="item-text-wrap">
+        <img ng-src="{{item.thumb}}">
+        <h2>{{item.name}}</h2>
+        <p>{{item.lastText}}</p>
+           <i class="icon" ng-class="{{item.selected}} ? 'ion-ios-circle-filled' : 'ion-ios-circle-outline'" ng-click="toggleIcon($event, 'ion-ios-circle', item)"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

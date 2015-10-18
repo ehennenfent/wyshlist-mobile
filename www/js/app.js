@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,6 +20,29 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
+    Ionic.io();
+
+    var push = new Ionic.Push({
+     "debug": true
+   });
+
+    var user = Ionic.User.current();
+    if (!user.id) {
+      user.id = Ionic.User.anonymousId();
+    }
+    user.set('firstName','Bij');
+    user.set('lastName','Baj');
+    var callback = function(data) {
+      console.log('Registered token: ' + data.token);
+      window.localStorage.setItem('token',data.token);
+      push.addTokenToUser(user);
+    }
+    push.register(callback);
+    var foo = window.localStorage.getItem('token');
+    if(foo !== null){
+    user.set('token',foo);}
+    user.save();
   });
 })
 
@@ -50,21 +73,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.wishlist', {
+      url: '/wishlist',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'tab-wishlist': {
+          templateUrl: 'templates/tab-wishlist.html',
+          controller: 'WishlistCtrl'
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+    .state('tab.edit', {
+      url: '/edit',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        'tab-wishlist': {
+          templateUrl: 'templates/edit-wishlist.html',
+          controller: 'EditWishlistCtrl'
         }
       }
     })
@@ -83,3 +106,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $urlRouterProvider.otherwise('/tab/dash');
 
 });
+
+window.onNotification = function(e) {
+      console.log(processNotification(e.message));
+          // this is the actual push notification. its format depends on the data model     from the push server
+          console.log('message = '+e.message);
+};
+var processNotification = function(stir){
+  return stir.replace('Check out new offers on ','').replace(' now!','');
+}
